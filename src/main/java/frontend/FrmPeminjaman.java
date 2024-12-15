@@ -100,6 +100,8 @@ public class FrmPeminjaman extends javax.swing.JFrame {
             }
         });
 
+        txtTanggalKembali.setEnabled(false);
+
         btnCariBuku.setText("Cari");
         btnCariBuku.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -168,11 +170,6 @@ public class FrmPeminjaman extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnTambahBaru)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnHapus))
-                    .addComponent(btnSimpan)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jLabel5)
@@ -205,7 +202,13 @@ public class FrmPeminjaman extends javax.swing.JFrame {
                                     .addComponent(txtTanggalPinjam, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addComponent(jLabel8)))))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnTambahBaru)
+                            .addComponent(btnSimpan))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnHapus)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -293,8 +296,7 @@ public class FrmPeminjaman extends javax.swing.JFrame {
             // Validasi input
             if (txtIdAnggota.getText().trim().isEmpty()
                     || txtIdBuku.getText().trim().isEmpty()
-                    || txtTanggalPinjam.getText().trim().isEmpty()
-                    || txtTanggalKembali.getText().trim().isEmpty()) {
+                    || txtTanggalPinjam.getText().trim().isEmpty()) {
                 javax.swing.JOptionPane.showMessageDialog(this,
                         "Semua field harus diisi!");
                 return;
@@ -304,7 +306,7 @@ public class FrmPeminjaman extends javax.swing.JFrame {
             pem.setIdpeminjaman(Integer.parseInt(txtIdPeminjaman.getText()));
 
             Anggota anggota = new Anggota().getById(Integer.parseInt(txtIdAnggota.getText()));
-            if (anggota.getIdanggota()== 0) {
+            if (anggota.getIdanggota() == 0) {
                 javax.swing.JOptionPane.showMessageDialog(this, "Anggota tidak ditemukan!");
                 return;
             }
@@ -346,6 +348,9 @@ public class FrmPeminjaman extends javax.swing.JFrame {
             lblNamaAnggota.setText(pem.getAnggota().getNama());
             lblJudulBuku.setText(pem.getBuku().getJudul());
         }
+
+        int idPeminjamanSelected = Integer.parseInt(model.getValueAt(row, 0).toString());
+        txtTanggalKembali.setEnabled(idPeminjamanSelected > 0);
     }//GEN-LAST:event_tblPeminjamanMouseClicked
 
     private void txtTanggalPinjamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTanggalPinjamActionPerformed

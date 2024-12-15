@@ -189,17 +189,13 @@ public class Peminjaman {
             System.out.println("Error: Tanggal pinjam tidak valid.");
             return;
         }
-        if (!isValidDate(this.tanggalKembali)) {
-            System.out.println("Error: Tanggal kembali tidak valid.");
-            return;
-        }
         
         if (getById(idpeminjaman).getIdpeminjaman() == 0) {
-            String SQL = "INSERT INTO peminjaman (idanggota, idbuku, tanggalPinjam, tanggalKembali) VALUES("
+            String SQL = "INSERT INTO peminjaman (idanggota, idbuku, tanggalPinjam) VALUES("
                     + this.getAnggota().getIdanggota() + ", "
                     + this.getBuku().getidbuku() + ", "
-                    + "'" + this.tanggalPinjam + "', "
-                    + "'" + this.tanggalKembali + "'"
+                    + "'" + this.tanggalPinjam + "' "
+
                     + ")";
             this.idpeminjaman = DBHelper.insertQueryGetId(SQL);
         } else {
